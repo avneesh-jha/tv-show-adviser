@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { BACKDROP_BASE_URL } from "./config";
 import { TVShowDetail } from "./components/TVShowDetail/TVShowDetail";
+import logoImg from "./Assets/Images/logo.png";
+import { Logo } from "./components/Logo/Logo";
+
 export function App() {
   const [currentTVShow, setCurrentTVShow] = useState();
   async function fetchPopulars() {
@@ -31,8 +34,11 @@ export function App() {
       <div className={s.header}>
         <div className="row">
           <div className="col-4">
-            <div>LOGO</div>
-            <div>Subtitle</div>
+            <Logo
+              img={logoImg}
+              title="Binge_Watch"
+              subtitle="Your Daily Destination"
+            />
           </div>
           <div className="col-md-12 col-lg-4">
             <input style={{ width: "100%" }} type="text" />
