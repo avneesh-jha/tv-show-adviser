@@ -6,10 +6,13 @@ import { BACKDROP_BASE_URL } from "./config";
 import { TVShowDetail } from "./components/TVShowDetail/TVShowDetail";
 import logoImg from "./Assets/Images/logo.png";
 import { Logo } from "./components/Logo/Logo";
-import { TVShowListItems } from "./components/TVShowListItems/TVShowListItems";
+// import { TVShowListItems } from "./components/TVShowListItems/TVShowListItems";
+
+import { TVShowList } from "./components/TVShowList/TVShowList";
 
 export function App() {
   const [currentTVShow, setCurrentTVShow] = useState();
+  const [recommendedList, setRecommendedList] = useState();
   async function fetchPopulars() {
     const popularTVShowList = await TvShowApi.fetchPopulars();
     if (popularTVShowList.length !== 0) {
@@ -17,11 +20,24 @@ export function App() {
     }
   }
 
+  async function fetchRecommendation(tvShowId) {
+    const recommendedListResp = await TvShowApi.fetchRecommendations(tvShowId);
+    if (recommendedListResp.length !== 0) {
+      setRecommendedList(recommendedListResp.slice(0, 10));
+    }
+  }
+
   useEffect(() => {
     fetchPopulars();
   }, []);
 
-  console.log(currentTVShow);
+  useEffect(() => {
+    if (currentTVShow) {
+      fetchRecommendation(currentTVShow.id);
+    }
+  }, [currentTVShow]);
+
+  console.log(recommendedList);
   return (
     <div
       className={s.main_container}
@@ -47,26 +63,10 @@ export function App() {
         </div>
       </div>
       <div className={s.tv_show_detail}>
-        {" "}
         {currentTVShow && <TVShowDetail tvShow={currentTVShow} />}{" "}
       </div>
       <div className={s.recommended_tv_shows}>
-        {currentTVShow && (
-          <>
-            <TVShowListItems
-              tvShow={currentTVShow}
-              onClick={(tvShow) => {
-                console.log("i have been clicked", tvShow);
-              }}
-            />
-            <TVShowListItems
-              tvShow={currentTVShow}
-              onClick={(tvShow) => {
-                console.log("i have been clicked", tvShow);
-              }}
-            />
-          </>
-        )}
+        {currentTVShow && <TVShowList tvShowList={recommendedList} />}
       </div>
     </div>
   );
