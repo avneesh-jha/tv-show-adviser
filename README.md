@@ -20,4 +20,4 @@ https://codesandbox.io/s/use-effect-cleanup-en-xtdoc3?file=/src/App.js
 
 
 
-VISIT THE LIVE SITE - https://tv-show-adviser-hscgn48m7-avneesh-jha.vercel.app/
+VISIT THE LIVE SITE - https://tv-show-adviser-avneesh-jha.vercel.app/
